@@ -1,14 +1,58 @@
 class IndecisionApp extends React.Component{
+    constructor(props){
+        super(props);
+        this.deleteOptions=this.deleteOptions.bind(this)
+        this.addOption=this.addOption.bind(this)
+        this.handlePick=this.handlePick.bind(this)
+        this.state={
+            options:['one','two','four']
+        }
+    }
+
+
+
+    deleteOptions(){
+        this.setState(()=>{
+            return{
+                options:[]
+            };
+        })
+    }
+    addOption(option){
+        if(this.state.options.indexOf(option) > -1){
+            return 'this option already exists'
+        }
+        this.setState((prevState)=>{
+            return{
+                options:prevState.options.concat(option)
+            }
+        })
+    }
+    handlePick(){
+        let rand=Math.floor(Math.random()*this.state.options.length)
+
+        alert(`Element Picked is ${this.state.options[rand]}`)
+    }
     render(){
+        
+
+
         const title="Indecision App"
         const subtitle="Let the computer decide your fate"
-        const options=['one','two','four']
+        
         return(
             <div>
                 <Header title={title} subtitle={subtitle}/>
-                <Action/>
-                <Options options={options}/>
-                <AddOptions/>
+                <Action hasOptions={this.state.options.length>0}
+                    pick={this.handlePick}
+                />
+                <Options 
+                    options={this.state.options}
+                    delete={this.deleteOptions}
+                />
+                <AddOptions
+                    addOption={this.addOption}
+                />
             </div>
         );
     }
@@ -26,10 +70,11 @@ class Header extends React.Component{
 }
 
 class Action extends React.Component{
+    
     render(){
         return(
             <div>
-                <button>Let the computer decide for you</button>
+                <button disabled={!this.props.hasOptions} onClick={this.props.pick}>Let the computer decide for you</button>
             </div>
 
         );
@@ -37,10 +82,14 @@ class Action extends React.Component{
 }
 
 class Options extends React.Component{
+
+   
     render(){
         return(
             <div>
+                <button onClick={this.props.delete}>Remove Items</button>
                 {
+                    
     
                     this.props.options.map((option)=>
                         <Option key={option} optionText={option}/>
@@ -66,10 +115,34 @@ class Option extends React.Component{
 }
 
 class AddOptions extends React.Component{
+    constructor(props){
+        super(props);
+        this.addOptionHandler=this.addOptionHandler.bind(this);
+        
+    }
+
+
+    addOptionHandler(e){
+        e.preventDefault();
+        let item=e.target.elements.task.value.trim();
+        if(item){
+            const error=this.props.addOption(item);
+            e.target.elements.task.value="";
+            if(error){
+                alert("duplicate")
+            }
+        }
+        
+    }
     render(){
         return(
             <div>
-                {<p>Add Option Component Here</p>}
+                <form onSubmit={this.addOptionHandler}>
+                    <input type="text" name="task">
+                    </input>
+                    <button>Add task</button>
+                </form>
+                
 
             </div>
 
