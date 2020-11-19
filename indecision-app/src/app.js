@@ -18,6 +18,11 @@ class IndecisionApp extends React.Component{
             };
         })
     }
+    deleteOneOption(optionToRemove){
+        this.setState((prevState)=>)
+    }
+
+
     addOption(option){
         if(this.state.options.indexOf(option) > -1){
             return 'this option already exists'
@@ -49,6 +54,7 @@ class IndecisionApp extends React.Component{
                 <Options 
                     options={this.state.options}
                     delete={this.deleteOptions}
+                    deleteOne={this.deleteOneOption}
                 />
                 <AddOptions
                     addOption={this.addOption}
@@ -92,7 +98,7 @@ class Options extends React.Component{
                     
     
                     this.props.options.map((option)=>
-                        <Option key={option} optionText={option}/>
+                        <Option key={option} optionText={option} deleteOne={this.props.deleteOne}/>
                     )
                 }
             </div>
@@ -104,10 +110,11 @@ class Option extends React.Component{
     render(){
         return(
             <div>
-                {
-                    <p>{this.props.optionText}</p>
-                    
-                }
+                
+                {this.props.optionText}
+                <button onClick={(e)=>{
+                    this.props.deleteOne(this.props.optionText)
+                }}>X</button>
 
             </div>
         )
