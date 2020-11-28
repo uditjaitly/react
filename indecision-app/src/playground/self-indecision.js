@@ -12,6 +12,30 @@ class Indecision extends React.Component{
         this.onDeleteHandler=this.onDeleteHandler.bind(this)
     }
 
+    componentDidMount(){
+        try{
+            const json=localStorage.getItem('options')
+        const options=JSON.parse(json)
+        this.setState(()=>{
+            return{
+                options:options
+            }
+        })
+        }
+        catch(e){
+
+        }
+
+        
+    }
+    componentDidUpdate(prevProps,prevState){
+        if(prevState.options.length!=this.state.options.length){
+            const json= JSON.stringify(this.state.options)
+            localStorage.setItem('options',json)
+        }
+        
+    }
+
     onActionHandler(){
         let randTask = Math.floor(Math.random()*this.state.options.length)
         let task=this.state.options[randTask]
@@ -85,7 +109,7 @@ class Action extends React.Component{
         return(
             <div>
                 <button disabled={this.props.noOptions} onClick={this.props.onAction}>Pick a random task</button>
-                <button onClick={this.props.remove}>Remove all options</button>
+                <button onClick={this.props.onRemove}>Remove all options</button>
             </div>
             
         );
