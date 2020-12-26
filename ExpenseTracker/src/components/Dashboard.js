@@ -1,8 +1,11 @@
 import React from 'react'
-
-const Dashboard=()=>(
+import ExpenseList from './ExpenseList'
+import ExpenseListFilters from './ExpenseListFilters'
+export const Dashboard=()=>(
     <div>
-        this is my dashboard component
+        <ExpenseListFilters/>
+        <ExpenseList/>
+        
     </div>
 )
 export default Dashboard
