@@ -22,12 +22,16 @@ export const removeExpense=(id)=>{
     
 }
 
-export const updateExpense=(id,amount)=>{
+export const updateExpense=(id,amount,description,note="",createdAt=0)=>{
     
     return{
         type:"UPDATE_EXPENSE",
         id,
-        amount
+        amount,
+        description,
+        note,
+        createdAt
+        
 
     }
 }

@@ -14,7 +14,10 @@ export default (state=defaultStateForExpenses,action)=>{
                 return {
                     
                         ...expense,
-                        amount:action.amount
+                        amount:action.amount,
+                        description:action.description,
+                        note:action.note,
+                        createdAt:action.createdAt
 
                     
 
