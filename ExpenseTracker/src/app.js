@@ -8,6 +8,7 @@ import configureStore from './store/configureStore'
 import {addExpense, removeExpense, updateExpense} from './actions/expenses'
 import {setFilterText} from './actions/filters'
 import './firebase/firebase'
+import './playground/promises'
 const store=configureStore
 
 

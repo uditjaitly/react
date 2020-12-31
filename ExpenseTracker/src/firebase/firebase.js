@@ -15,6 +15,31 @@ var config = {
   
 firebase.initializeApp(config);
 
-firebase.database().ref().set({
-    name:"udit"
+
+
+
+const database=firebase.database()
+
+database.ref().remove()
+
+database.ref('notes').push({
+    task:"clean room",
+    status:"Done"
 })
+database.ref('notes').push({
+    task:"buy food",
+    status:"Done"
+})
+
+database.ref('notes').on('value',(snapshot)=>{
+    const snapshotList=[]
+
+    snapshot.forEach((child)=>{
+        snapshotList.push({
+            id:child.key,
+            ...snapshot.val()
+        })
+    })
+    console.log(snapshotList)
+})
+
